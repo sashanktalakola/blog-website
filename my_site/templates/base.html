@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="{% static "blog/css/main.css" %}">
   </head>
   <body>
+
     {% block content %}{% endblock content %}
+    {% include "blog/includes/footer.html"%}
+
   </body>
 </html>
