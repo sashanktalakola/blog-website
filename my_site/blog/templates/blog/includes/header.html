@@ -1,0 +1,29 @@
+<nav class="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top">
+    <div class="container">
+        <div class="navbar-collapse collapse" id="navbarColor02" style="">
+            <ul class="navbar-nav mr-auto d-flex align-items-center">
+                <li class="nav-item">
+                <a class="nav-link" href="{% url "homepage" %}">Home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{% url "post_article" %}">Post Article</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{% url "trending_articles" %}">Trending</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{% url "about_us" %}">About</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto d-flex align-items-center">
+                <li class="nav-item highlight">
+                {% if page_data.login.logged_in %}
+                <a class="nav-link" href="{% url "account" %}">{{page_data.login.name}}</a>
+                {% else %}
+                <a class="nav-link" href="{% url "login_or_signup" %}">Login / Signup</a>
+                {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

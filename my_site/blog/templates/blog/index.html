@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}Blog Homepage{% endblock page_title %}
+
+{% block content %}
+<!--Navigation Bar-->
+    {% include "blog/includes/header.html"%}
+<!--End Navigation Bar-->
+<!--Hero Section-->
+    <div class="container">
+        <div class="jumbotron jumbotron-fluid mb-3 pt-0 pb-0 bg-lightblue position-relative">
+            <div class="pl-4 pr-0 h-100 tofront">
+                <div class="row justify-content-between">
+                    <div class="col-md-6 pt-6 pb-6 align-self-center">
+                        <h1 class="secondfont mb-3 font-weight-bold">{{page_data.hero_section.title}}</h1>
+                        <p class="mb-3">
+                            {{page_data.hero_section.article_overview}}
+                        </p>
+                        <p class="mb-3">
+							
+                            <a class="text-muted" style="text-decoration: none;" href="{% url "author_page" page_data.hero_section.author_id %}">{{page_data.hero_section.author_name}}</a>
+                        </p>
+                        <a href="{% url "article_page" page_data.hero_section.article_link %}" class="btn btn-dark">Read More</a>
+                    </div>
+                    {% if page_data.hero_section.display_image %}
+                    <div class="col-md-6 d-none d-md-block pr-0" style="background-size:cover;background-image: url({% static page_data.hero_section.image_path %});"></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+<!--End Hero Section-->
+<!--Sub Recommendations-->
+<div class="container pt-4 pb-4">
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="card border-0 mb-4 box-shadow h-xl-300">
+                {% if page_data.main_sub_recommendation.display_image %}            
+                <div style="background-image: url({% static page_data.main_sub_recommendation.image_path %}); height: 150px; background-size: cover; background-repeat: no-repeat;"></div>               
+				{% endif %}
+                <div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
+					<h2 class="h4 font-weight-bold">
+					<a class="text-dark" href="{% url "article_page" page_data.main_sub_recommendation.article_link %}">{{page_data.main_sub_recommendation.title}}</a>
+					</h2>
+					<p class="card-text">
+                        {{page_data.main_sub_recommendation.article_overview}}
+					</p>
+					<div>
+						<small class="d-block"><a class="text-muted" href="{% url "author_page" page_data.main_sub_recommendation.author_id %}">{{page_data.main_sub_recommendation.author_name}}</a></small>
+						<small class="text-muted">{{page_data.main_sub_recommendation.time}}</small>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="flex-md-row mb-4 box-shadow h-xl-300">
+				{% for item in page_data.rem_sub_recommendation %}
+				<div class="mb-3 d-flex align-items-center">
+                    {% if item.display_image %}
+					<img height="80" src="{% static item.image_path %}">
+					{% endif %}
+                    <div class="pl-3">
+						<h2 class="mb-2 h6 font-weight-bold">
+						<a class="text-dark" href="{% url "article_page" item.article_link %}" style="text-decoration: none;">{{item.title}}</a>
+						</h2>
+						<div class="card-text text-muted small">
+                            {{item.article_overview}}
+						</div>
+						<small class="text-muted">{{item.time}}</small>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+<!--End Sub Recommendations-->
+<!--All Stories Recommendations-->
+<div class="container">
+	<div class="row justify-content-between">
+		<div class="col-md-8">
+			<h5 class="font-weight-bold spanborder"><span>All Stories</span></h5>
+			{% for item in page_data.all_stories %}
+			<div class="mb-3 d-flex justify-content-between">
+				<div class="pr-3">
+					<h2 class="mb-1 h4 font-weight-bold">
+					<a class="text-dark" href="{% url "article_page" item.article_link %}" style="text-decoration: none;">{{item.title}}</a>
+					</h2>
+					<p>
+						{{item.article_overview}}
+					</p>
+					<div class="card-text text-muted small">
+                        <a class="text-muted" style="text-decoration: none;" href="{% url "author_page" item.author_id %}">{{item.author_name}}</a>
+					</div>
+					<small class="text-muted">{{item.time}}</small>
+				</div>
+				<img height="120" src="{% static item.image_path %}">
+			</div>
+			{% endfor %}
+		</div>
+<!--End All Stories Recommendations-->
+<!--Popular Stories Recommendations-->
+        <div class="col-md-4 pl-4">
+            <h5 class="font-weight-bold spanborder"><span>Popular</span></h5>
+			<ol class="list-featured">
+				{% for item in page_data.popular_stories %}
+				<li>
+				<span>
+				<h6 class="font-weight-bold">
+				<a href="{% url "article_page" item.article_link %}" class="text-dark" style="text-decoration: none;">{{item.title}}</a>
+				</h6>
+				<p class="text-muted">
+					<a class="text-muted" style="text-decoration: none;" href="{% url "author_page" item.author_id %}">{{item.author_name}}</a>
+				</p>
+				</span>
+				</li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+</div>
+<!--End Popular Stories Recommendations-->
+{% endblock content %}
