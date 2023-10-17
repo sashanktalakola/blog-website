@@ -114,4 +114,3 @@ def parseIndividualPageTopics(page):
     topics = page.find_all("div", class_="ra go cw rb ed rc rd be b bf z bj re")
     topics_names = [item.text for item in topics]
     return topics_names
-
