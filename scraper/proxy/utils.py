@@ -3,7 +3,8 @@ import requests
 from bs4 import BeautifulSoup
 
 columns = ['date', 'title', 'subtitle', 'claps', 'responses', 'author_url', 'story_url',
-               'reading_time (mins)', 'number_sections', 'section_titles', 'number_paragraphs', 'paragraphs']
+           'reading_time (mins)', 'number_sections', 'section_titles', 'number_paragraphs',
+           'paragraphs', 'topics_names']
 def createCsv(name):
     df = pd.DataFrame(columns=columns)
     df.to_csv(name, index=False)
@@ -78,9 +79,9 @@ def parseIndividualDayStory(story, use_proxy=False, proxy_details=None):
     reading_time = reading_time.split()[0]
     responses = responses.split()[0]
 
-    story_paragraphs, section_titles, number_sections, number_paragraphs = parseIndividualArticle(story_url, use_proxy, proxy_details)
+    story_paragraphs, section_titles, number_sections, number_paragraphs, topics_names = parseIndividualArticle(story_url, use_proxy, proxy_details)
 
-    return author_url, reading_time, title, subtitle, claps, responses, story_url, story_paragraphs, section_titles, number_sections, number_paragraphs
+    return author_url, reading_time, title, subtitle, claps, responses, story_url, story_paragraphs, section_titles, number_sections, number_paragraphs, topics_names
 
 def parseIndividualArticle(story_url, use_proxy=False, proxy_details=None):
     if use_proxy:
@@ -102,7 +103,14 @@ def parseIndividualArticle(story_url, use_proxy=False, proxy_details=None):
         for sub in subs:
             section_titles.append(sub.text)
 
+    topics_names = parseIndividualPageTopics(story_page)
+
     number_sections = len(section_titles)
     number_paragraphs = len(story_paragraphs)
 
-    return story_paragraphs, section_titles, number_sections, number_paragraphs
+    return story_paragraphs, section_titles, number_sections, number_paragraphs, topics_names
+
+def parseIndividualPageTopics(page):
+    topics = page.find_all("div", class_="ra go cw rb ed rc rd be b bf z bj re")
+    topics_names = [item.text for item in topics]
+    return topics_names

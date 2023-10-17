@@ -23,7 +23,7 @@ for month in range(1, 13):
 
             author_url, reading_time, title, subtitle, \
             claps, responses, story_url, story_paragraphs, \
-            section_titles, number_sections, number_paragraphs = vals
+            section_titles, number_sections, number_paragraphs, topics_names = vals
 
             current_day_story_data.append(date)
             current_day_story_data.append(title)
@@ -37,6 +37,7 @@ for month in range(1, 13):
             current_day_story_data.append(section_titles)
             current_day_story_data.append(number_paragraphs)
             current_day_story_data.append(story_paragraphs)
+            current_day_story_data.append(topics_names)
 
             current_day_data.append(current_day_story_data)
 
