@@ -26,6 +26,10 @@ html {
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block; }
 
+.article-post p {
+    font-size: 88%;
+}
+
 body {
   margin: 0;
   font-family: "Source Sans Pro", "Segoe UI", "Helvetica Neue", "Arial";

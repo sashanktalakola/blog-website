@@ -13,8 +13,9 @@ def index(request):
         }        
     )
 
-def post(request, post_id):
-    return HttpResponse(f"Viewing Post Page - {post_id}")
+def post(request, user_id, slug):
+    return render(request, "blog/single-post.html")
+    #return HttpResponse(f"Viewing Post Page - {slug} From User - {user_id}")
 
 def categories(request):
     return HttpResponse("Viewing Page - Categories")
