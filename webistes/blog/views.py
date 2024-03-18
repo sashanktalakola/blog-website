@@ -1,9 +1,17 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from . import data
 
 # Create your views here.
 def index(request):
-    return render(request, "blog/index.html")
+    return render(request, "blog/index.html", {
+        "main_post": data.main_post,
+        "top_posts_row": data.top_posts_row,
+        "top_posts_col": data.top_posts_col,
+        "all_stories": data.all_stories,
+        "popular_stories": data.popular_stories,
+        }        
+    )
 
 def post(request, post_id):
     return HttpResponse(f"Viewing Post Page - {post_id}")
