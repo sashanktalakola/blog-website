@@ -8,4 +8,3 @@ venv/
 **/*.sqlite3
 
 **/data.py
-**/data.*
