@@ -28,3 +28,6 @@ def trending_posts(request):
 
 def favourite_posts(request):
     return HttpResponse("Viewing Page - favourite_posts")
+
+def category_posts(request):
+    return HttpResponse("Viewing ...")
