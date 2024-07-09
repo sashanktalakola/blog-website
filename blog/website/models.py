@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 # Create your models here.
 class user(models.Model):
@@ -38,3 +39,21 @@ class post(models.Model):
     post_featured_img_path = models.CharField(max_length=170, blank=True, null=True)
     post_tags = models.ManyToManyField(tag)
     post_categories = models.ManyToManyField(category)
+    
+    def __str__(self):
+        return str(self.post_slug)
+    
+class authentication(models.Model):
+    auth_id = models.AutoField(primary_key=True)
+    user_id = models.OneToOneField(user, on_delete=models.CASCADE, null=False, blank=False)
+    auth_pass_hash = models.CharField(max_length=12,
+                                      blank=False,
+                                      null=False,
+                                      validators=[
+                                          MinLengthValidator(12),
+                                          MaxLengthValidator(12),
+                                      ],
+                                    )
+    
+    def __str__(self):
+        return str(self.user_id)
