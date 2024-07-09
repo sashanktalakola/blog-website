@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, MaxLengthValidator
+from .utils.models import slug_and_hash_post_title
 
 # Create your models here.
 class user(models.Model):
@@ -25,23 +26,37 @@ class category(models.Model):
     
     def __str__(self):
         return str(self.category_name)
-    
+  
+POST_STATUS_POSSIBLE_VALUES = [
+    "Published",
+    "Archived",
+    "Deleted"
+]
+
+POST_STATUS_CHOICES = [(item, item) for item in POST_STATUS_POSSIBLE_VALUES]
+
 class post(models.Model):
     post_id = models.AutoField(primary_key=True)
-    user_name = models.ForeignKey(user, on_delete=models.CASCADE, null=True)
+    user_id = models.ForeignKey(user, on_delete=models.CASCADE, null=True)
     post_title = models.CharField(max_length=150, blank=False, null=False)
     post_content = models.TextField(blank=False, null=False)
     post_published_at = models.DateTimeField(auto_now=False, auto_now_add=True, blank=False, null=False)
     post_last_modified = models.DateTimeField(auto_now=True, auto_now_add=False, blank=False, null=False)
     post_slug = models.SlugField(max_length=175, blank=False, null=False)
-    post_status = models.CharField(max_length=15, default="Published", blank=False, null=False)
+    post_status = models.CharField(max_length=15, default="Published", blank=False, null=False, choices=POST_STATUS_CHOICES)
     post_description = models.TextField(blank=True, null=True)
     post_featured_img_path = models.CharField(max_length=170, blank=True, null=True)
-    post_tags = models.ManyToManyField(tag)
-    post_categories = models.ManyToManyField(category)
+    post_tags = models.ManyToManyField(tag, blank=True)
+    post_categories = models.ManyToManyField(category, blank=True)
     
     def __str__(self):
         return str(self.post_slug)
+    
+    def save(self, *args, **kwargs):
+        new_slug = slug_and_hash_post_title(self.post_title, "tmp")
+        self.post_slug = new_slug
+        
+        super().save(*args, **kwargs)
     
 class authentication(models.Model):
     auth_id = models.AutoField(primary_key=True)
