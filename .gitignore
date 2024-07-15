@@ -2,7 +2,7 @@ external-files/
 venv/
 .env/
 
-website/static/img/
+# website/static/img/
 
 **/__pycache__/
 
