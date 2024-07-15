@@ -8,8 +8,8 @@
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
 
         {% block page_icon %}
-            <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/favicon.ico">
-            <link rel="icon" type="image/png" href="./assets/img/favicon.ico">
+            <link rel="apple-touch-icon" sizes="76x76" href={% static "website/img/favicon.ico" %}>
+            <link rel="icon" type="image/png" href={% static "website/img/favicon.ico" %}>
         {% endblock page_icon %}
 
         <title>{% block page_title %}{% endblock page_title %}</title>
