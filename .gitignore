@@ -2,6 +2,8 @@ external-files/
 venv/
 .env/
 
+website/static/img/
+
 **/__pycache__/
 
 
